@@ -1,0 +1,6 @@
+sqlalchemy
+pandas
+mysql-connector-python
+streamlit
+streamlit-aggrid
+streamlit-extras
