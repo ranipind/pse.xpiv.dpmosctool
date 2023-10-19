@@ -4,6 +4,7 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 from DButil import *
 from streamlit_autorefresh import st_autorefresh
 import datetime
+import pytz
 
 @st.cache_data
 def convert_df(data):
@@ -40,8 +41,9 @@ def main():
     st_autorefresh(interval=120000, key="pageautorefresh")
     _, center, _ = st.columns([2.8, 3.2, 2.8])
     with center.container():
-        st.title(':bicyclist: :blue[DPMO Cycling Status Collector] :bicyclist:')
-    st.info('Data is Last Refreshed At: {}'.format(datetime.datetime.now().strftime("%d-%m-%Y, %H:%M:%S")))
+        st.title(':blue[DPMO Cycling Status Collector]')
+    IST = pytz.timezone('Asia/Kolkata')
+    st.info('Data is Last Refreshed At: {} (IST)'.format(datetime.datetime.now(IST).strftime("%d-%m-%Y, %H:%M:%S")))
 
     ap_df, sp_df = get_df()
 
