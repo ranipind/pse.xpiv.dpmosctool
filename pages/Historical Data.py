@@ -2,6 +2,8 @@ import streamlit as st
 from st_aggrid import AgGrid
 from streamlit_extras.add_vertical_space import add_vertical_space
 from DButil import *
+from streamlit_autorefresh import st_autorefresh
+import datetime
 
 
 @st.cache_data
@@ -32,13 +34,15 @@ def main():
 
     st.set_page_config(
         page_title="DPMO Status Collector",
-        page_icon="🧊",
+        page_icon="♾️",
         layout="wide",
         initial_sidebar_state="expanded",
     )
-    st.markdown("<h2 style='text-align: center; border: 4px solid black;'>DPMO STATUS COLLECTOR - HISTORICAL DATA</h2>",
-                unsafe_allow_html=True)
-    st.markdown('<style>div.block-container{padding-top:4rem;}</style>', unsafe_allow_html=True)
+    st_autorefresh(interval=120000, key="pageautorefresh")
+    _, center, _ = st.columns([2.8, 3.2, 2.8])
+    with center.container():
+        st.title(':bicyclist: :blue[DPMO Cycling Historical Data] :bicyclist:')
+    st.info('Data is Last Refreshed At: {}'.format(datetime.datetime.now().strftime("%d-%m-%Y, %H:%M:%S")))
 
     ap_df, sp_df = get_df()
 
