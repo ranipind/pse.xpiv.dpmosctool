@@ -39,9 +39,9 @@ def main():
         initial_sidebar_state="expanded",
     )
     st_autorefresh(interval=120000, key="pageautorefresh")
-    _, center, _ = st.columns([2.8, 3.2, 2.8])
-    with center.container():
-        st.title(':blue[DPMO Cycling Status Collector]')
+    st.markdown("<h2 style='text-align: center; color: blue; font-weight: bold;'>DPMO Cycling Status Collector</h2>",
+                unsafe_allow_html=True)
+    st.markdown('<style>div.block-container{padding-top:4rem;}</style>', unsafe_allow_html=True)
     IST = pytz.timezone('Asia/Kolkata')
     st.info('Data is Last Refreshed At: {} (IST)'.format(datetime.datetime.now(IST).strftime("%d-%m-%Y, %H:%M:%S")))
 
