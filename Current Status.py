@@ -71,6 +71,8 @@ def main():
                   'type': [], "columnGroupShow": "open", "filter": 'agDateColumnFilter'},
                  {'headerName': 'Target Cycles', 'field': 'Target Cycles',
                   'type': ['numericColumn', 'numberColumnFilter'], "columnGroupShow": "open"},
+                 {'headerName': 'Work Week', 'field': 'Work Week', 'type': [], 'width': 150},
+                 {'headerName': 'Attempt', 'field': 'Attempt', 'type': [], 'width': 150},
                  {'headerName': 'Cycles Run', 'field': 'Cycles Run',
                   'type': ['numericColumn', 'numberColumnFilter']},
                  {'headerName': 'Nof Failures', 'field': 'Nof Failures',
