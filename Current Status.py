@@ -1,3 +1,5 @@
+import os
+
 import streamlit as st
 from st_aggrid import AgGrid
 from streamlit_extras.add_vertical_space import add_vertical_space
@@ -13,7 +15,9 @@ def convert_df(data):
 
 
 def get_df():
-    return get_dataframe(cs_tables["AP"]), get_dataframe(cs_tables["SP"])
+    return (get_dataframe(cs_tables["AP"], os.environ["dpmo_bkc_no"]),
+            get_dataframe(cs_tables["SP"], os.environ["dpmo_bkc_no"]),
+            get_dataframe(cs_tables["EMR_FSP_API"], os.environ["dpmo_bkc_no"]))
 
 
 def show_df(cs_frame, key):
@@ -43,9 +47,10 @@ def main():
                 unsafe_allow_html=True)
     st.markdown('<style>div.block-container{padding-top:4rem;}</style>', unsafe_allow_html=True)
     IST = pytz.timezone('Asia/Kolkata')
-    st.info('Data is Last Refreshed At: {} (IST)'.format(datetime.datetime.now(IST).strftime("%d-%m-%Y, %H:%M:%S")))
+    st.info('Data is last refreshed at: {} (IST)'.format(datetime.datetime.now(IST).strftime("%d-%m-%Y, %H:%M:%S")))
+    st.success('Data will be fetched only for Current BKC (BKC{}), older data can be seen in historical data'.format(os.environ["dpmo_bkc_no"]))
 
-    ap_df, sp_df = get_df()
+    ap_df, sp_df, fsp_df = get_df()
 
     tab1, tab2, tab3 = st.tabs(["EMR-Server", "EMR-Workstation", "EMR-FSP-API"])
     grid_options = {
@@ -96,6 +101,11 @@ def main():
         grid_return = AgGrid(ap_df, gridOptions=grid_options, theme="alpine", key="cs_ap")
         ap_cs_frame = grid_return['data']
         show_df(ap_cs_frame, "AP")
+
+    with tab3:
+        grid_return = AgGrid(fsp_df, gridOptions=grid_options, theme="alpine", key="cs_fsp")
+        fsp_cs_frame = grid_return['data']
+        show_df(fsp_cs_frame, "fsp")
 
 
 if __name__ == "__main__":

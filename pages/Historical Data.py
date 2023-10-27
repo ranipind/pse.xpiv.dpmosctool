@@ -14,7 +14,7 @@ def convert_df(data):
 
 
 def get_df():
-    return get_dataframe(hs_tables["AP"]), get_dataframe(hs_tables["SP"])
+    return get_dataframe(hs_tables["AP"]), get_dataframe(hs_tables["SP"]), get_dataframe(cs_tables["EMR_FSP_API"])
 
 
 def show_df(cs_frame, key):
@@ -46,7 +46,7 @@ def main():
     IST = pytz.timezone('Asia/Kolkata')
     st.info('Data is Last Refreshed At: {} (IST)'.format(datetime.datetime.now(IST).strftime("%d-%m-%Y, %H:%M:%S")))
 
-    ap_df, sp_df = get_df()
+    ap_df, sp_df, fsp_df = get_df()
 
     tab1, tab2, tab3 = st.tabs(["EMR-Server", "EMR-Workstation", "EMR-FSP-API"])
 
@@ -93,13 +93,18 @@ def main():
 
     with tab1:
         grid_return = AgGrid(sp_df, gridOptions=grid_options, theme="alpine", key="hs_sp")
-        sp_cs_frame = grid_return['data']
-        show_df(sp_cs_frame, 'SP')
+        sp_hs_frame = grid_return['data']
+        show_df(sp_hs_frame, 'SP')
 
     with tab2:
         grid_return = AgGrid(ap_df, gridOptions=grid_options, theme="alpine", key="hs_ap")
-        ap_cs_frame = grid_return['data']
-        show_df(ap_cs_frame, 'AP')
+        ap_hs_frame = grid_return['data']
+        show_df(ap_hs_frame, 'AP')
+
+    with tab3:
+        grid_return = AgGrid(fsp_df, gridOptions=grid_options, theme="alpine", key="s_fsp")
+        fsp_hs_frame = grid_return['data']
+        show_df(fsp_hs_frame, "fsp")
 
 
 if __name__ == "__main__":

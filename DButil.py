@@ -11,8 +11,8 @@ engine = create_engine(f"mysql+mysqlconnector://"
 cs_table = os.environ['dpmo_cs_table']
 hs_table = os.environ['dpmo_hs_table']
 
-cs_tables = {"AP": cs_table + "_AP", "SP": cs_table + "_SP"}
-hs_tables = {"AP": hs_table + "_AP", "SP": hs_table + "_SP"}
+cs_tables = {"AP": cs_table + "_AP", "SP": cs_table + "_SP", "EMR_FSP_API": cs_table + "_EMR_FSP_API"}
+hs_tables = {"AP": hs_table + "_AP", "SP": hs_table + "_SP", "EMR_FSP_API": hs_table + "_EMR_FSP_API"}
 
 cs_dtype = ['string', 'string', 'string', 'int', 'string', 'string', 'string', 'datetime', 'datetime', 'int', 'int', 'int', 'string', 'string', 'string', 'string', 'string']
 hs_dtype = ['string', 'string', 'string', 'int', 'string', 'string', 'string', 'int', 'datetime', 'datetime', 'int', 'int', 'int', 'string', 'string', 'string', 'string', 'string', 'string']
@@ -22,8 +22,11 @@ def write_to_db(df, table, method="replace"):
     df.to_sql(table, engine, if_exists=method, index=False)
 
 
-def get_dataframe(table):
-    return pd.read_sql(f"SELECT * from `{table}`", engine, parse_dates=["Cycling Start Date", "Cycling Stop Date"])
+def get_dataframe(table, bkc_no=None):
+    condition = ''
+    if bkc_no is not None:
+        condition = f"WHERE `Work Week` LIKE 'BKC{bkc_no}%'"
+    return pd.read_sql(f"SELECT * from `{table}` {condition}", engine, parse_dates=["Cycling Start Date", "Cycling Stop Date"])
 
 
 def create_table(name):
