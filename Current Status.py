@@ -15,9 +15,9 @@ def convert_df(data):
 
 
 def get_df():
-    return (get_dataframe(cs_tables["AP"], os.environ["dpmo_bkc_no"]),
-            get_dataframe(cs_tables["SP"], os.environ["dpmo_bkc_no"]),
-            get_dataframe(cs_tables["EMR_FSP_API"], os.environ["dpmo_bkc_no"]))
+    return (get_dataframe(cs_tables["AP"], os.environ["dpmo_ws_bkc_no"]),
+            get_dataframe(cs_tables["SP"], os.environ["dpmo_server_bkc_no"]),
+            get_dataframe(cs_tables["EMR_FSP_API"], os.environ["dpmo_fsp_bkc_no"]))
 
 
 def show_df(cs_frame, key):
@@ -48,7 +48,9 @@ def main():
     st.markdown('<style>div.block-container{padding-top:4rem;}</style>', unsafe_allow_html=True)
     IST = pytz.timezone('Asia/Kolkata')
     st.info('Data is last refreshed at: {} (IST)'.format(datetime.datetime.now(IST).strftime("%d-%m-%Y, %H:%M:%S")))
-    st.success('Data will be fetched only for Current BKC (BKC{}), older data can be seen in historical data'.format(os.environ["dpmo_bkc_no"]))
+    st.success('Data will be fetched only for Current BKC (Server - BKC{}, WS - BKC{}, FSP - BKC{}), older data can '
+               'be seen in historical data'.format(os.environ["dpmo_server_bkc_no"], os.environ["dpmo_ws_bkc_no"],
+                                                   os.environ["dpmo_fsp_bkc_no"]))
 
     ap_df, sp_df, fsp_df = get_df()
 
