@@ -14,7 +14,7 @@ def convert_df(data):
 
 
 def get_df():
-    return get_dataframe(hs_tables["AP"]), get_dataframe(hs_tables["SP"]), get_dataframe(cs_tables["EMR_FSP_API"])
+    return get_dataframe(hs_tables["AP"]), get_dataframe(hs_tables["SP"]), get_dataframe(hs_tables["EMR_FSP_API"])
 
 
 def show_df(cs_frame, key):
@@ -102,7 +102,7 @@ def main():
         show_df(ap_hs_frame, 'AP')
 
     with tab3:
-        grid_return = AgGrid(fsp_df, gridOptions=grid_options, theme="alpine", key="s_fsp")
+        grid_return = AgGrid(fsp_df, gridOptions=grid_options, theme="alpine", key="hs_fsp")
         fsp_hs_frame = grid_return['data']
         show_df(fsp_hs_frame, "fsp")
 
