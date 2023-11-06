@@ -53,7 +53,6 @@ def main():
     grid_options = {
         'defaultColDef': {'minWidth': 5, 'editable': False, 'filter': True, 'resizable': True, 'sortable': True},
         'columnDefs': [
-            # {'headerName': 'ID', 'valueGetter': 'node.id', "width": 70},
             {'headerName': 'Work Week', 'field': 'Work Week', "rowGroup": True, "hide": True},
             {'headerName': 'Cycling Type', 'field': 'Cycling Type', "rowGroup": True, "hide": True},
             {'headerName': 'System', 'field': 'System', "rowGroup": True, "hide": True},
@@ -64,7 +63,7 @@ def main():
                  {"field": "Sockets", "columnGroupShow": "open"},
                  {"field": "OS", "columnGroupShow": "open"},
                  {"field": "HW CFG Description", "columnGroupShow": "open"},
-                 {"field": "IFWI"}]},
+                 {"field": "IFWI", 'width': 140}]},
             {'headerName': "DPMO Status",
              "marryChildren": True,
              "children": [
@@ -74,19 +73,19 @@ def main():
                   'type': [], "columnGroupShow": "open", "filter": 'agDateColumnFilter'},
                  {'headerName': 'Target Cycles', 'field': 'Target Cycles',
                   'type': ['numericColumn', 'numberColumnFilter'], "columnGroupShow": "open"},
-                 {'headerName': 'Attempt', 'field': 'Attempt', 'type': [], 'width':150},
+                 {'headerName': 'Attempt', 'field': 'Attempt', 'type': [], 'width': 120},
                  {'headerName': 'Cycles Run', 'field': 'Cycles Run',
-                  'type': ['numericColumn', 'numberColumnFilter']},
+                  'type': ['numericColumn', 'numberColumnFilter'],  'width': 150},
                  {'headerName': 'Nof Failures', 'field': 'Nof Failures',
                   'type': ['numericColumn', 'numberColumnFilter'], "columnGroupShow": "open"},
                  {'headerName': 'Failure Description', 'field': 'Failure Description',
                   'editable': True, "columnGroupShow": "open", "width": 600},
                  {'headerName': 'PostCode', 'field': 'PostCode', 'type': [], "columnGroupShow": "open"},
-                 {'headerName': 'Current State', 'field': 'Current State', 'type': []},
+                 {'headerName': 'Current State', 'field': 'Current State', 'type': [], 'width': 150},
              ]
 
              },
-            {'headerName': 'Log Path', 'field': 'Log Path', 'type': []},
+            {'headerName': 'Log Path', 'field': 'Log Path', 'type': [], 'width':540},
             {'headerName': 'Sighting ID', 'field': 'Sighting ID', 'type': [], 'editable': True},
             {'headerName': 'Comment', 'field': 'Comment', 'type': [], 'editable': True},
         ]}

@@ -48,9 +48,7 @@ def main():
     st.markdown('<style>div.block-container{padding-top:4rem;}</style>', unsafe_allow_html=True)
     IST = pytz.timezone('Asia/Kolkata')
     st.info('Data is last refreshed at: {} (IST)'.format(datetime.datetime.now(IST).strftime("%d-%m-%Y, %H:%M:%S")))
-    st.success('Data will be fetched only for Current BKC (Server - BKC{}, WS - BKC{}, FSP - BKC{}), older data can '
-               'be seen in historical data'.format(os.environ["dpmo_server_bkc_no"], os.environ["dpmo_ws_bkc_no"],
-                                                   os.environ["dpmo_fsp_bkc_no"]))
+    st.success('This page shows only the current state of system(s), older data can be seen in historical data')
 
     ap_df, sp_df, fsp_df = get_df()
 
@@ -67,30 +65,30 @@ def main():
                  {"field": "Sockets", "columnGroupShow": "open"},
                  {"field": "OS", "columnGroupShow": "open"},
                  {"field": "HW CFG Description", "columnGroupShow": "open"},
-                 {"field": "IFWI"}]},
+                 {"field": "IFWI", 'width': 140}]},
             {'headerName': "DPMO Status",
              "marryChildren": True,
              "children": [
-                 {'headerName': 'Cycling Type', 'field': 'Cycling Type', 'type': []},
+                 {'headerName': 'Cycling Type', 'field': 'Cycling Type', 'type': [], 'width': 140},
                  {'headerName': 'Cycling Start Date', 'field': 'Cycling Start Date', 'type': [],
                   "columnGroupShow": "open", "filter": 'agDateColumnFilter'},
                  {'headerName': 'Cycling Stop Date', 'field': 'Cycling Stop Date',
                   'type': [], "columnGroupShow": "open", "filter": 'agDateColumnFilter'},
                  {'headerName': 'Target Cycles', 'field': 'Target Cycles',
                   'type': ['numericColumn', 'numberColumnFilter'], "columnGroupShow": "open"},
-                 {'headerName': 'Work Week', 'field': 'Work Week', 'type': [], 'width': 150},
-                 {'headerName': 'Attempt', 'field': 'Attempt', 'type': [], 'width': 150},
+                 {'headerName': 'BKC', 'field': 'BKC', 'type': [], 'width': 100},
+                 {'headerName': 'Attempt', 'field': 'Attempt', 'type': [],'width': 120},
                  {'headerName': 'Cycles Run', 'field': 'Cycles Run',
-                  'type': ['numericColumn', 'numberColumnFilter']},
+                  'type': ['numericColumn', 'numberColumnFilter'], 'width': 150},
                  {'headerName': 'Nof Failures', 'field': 'Nof Failures',
                   'type': ['numericColumn', 'numberColumnFilter'], "columnGroupShow": "open"},
                  {'headerName': 'Failure Description', 'field': 'Failure Description',
                   'editable': True, "columnGroupShow": "open", "width": 600},
                  {'headerName': 'PostCode', 'field': 'PostCode', 'type': [], "columnGroupShow": "open"},
-                 {'headerName': 'Current State', 'field': 'Current State', 'type': []},
+                 {'headerName': 'Current State', 'field': 'Current State', 'type': [], 'width': 150},
              ]
              },
-            {'headerName': 'Log Path', 'field': 'Log Path', 'type': []},
+            {'headerName': 'Log Path', 'field': 'Log Path', 'type': [], 'width':540},
             {'headerName': 'PCIe Info', 'field': 'PCIe Info', 'type': []},
             {'headerName': 'Comment', 'field': 'Comment', 'type': [], 'editable': True}
         ]}
