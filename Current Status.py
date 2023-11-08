@@ -15,8 +15,8 @@ def convert_df(data):
 
 
 def get_df():
-    return (get_dataframe(cs_tables["AP"], os.environ["dpmo_ws_bkc_no"]),
-            get_dataframe(cs_tables["SP"], os.environ["dpmo_server_bkc_no"]),
+    return (get_dataframe(cs_tables["AP"]),
+            get_dataframe(cs_tables["SP"]),
             get_dataframe(cs_tables["EMR_FSP_API"], os.environ["dpmo_fsp_bkc_no"]))
 
 
@@ -92,6 +92,46 @@ def main():
             {'headerName': 'PCIe Info', 'field': 'PCIe Info', 'type': []},
             {'headerName': 'Comment', 'field': 'Comment', 'type': [], 'editable': True}
         ]}
+
+    grid_options_fsp_api = {
+        'defaultColDef': {'minWidth': 5, 'editable': False, 'filter': True, 'resizable': True, 'sortable': True},
+        'columnDefs': [
+            {'headerName': 'ID', 'valueGetter': 'node.id', "width": 70},
+            {'headerName': 'System', 'field': 'System'},
+            {'headerName': "HW Status",
+             "marryChildren": True,
+             'children': [
+                 {"field": "QDF", "columnGroupShow": "open"},
+                 {"field": "Sockets", "columnGroupShow": "open"},
+                 {"field": "OS", "columnGroupShow": "open"},
+                 {"field": "HW CFG Description", "columnGroupShow": "open"},
+                 {"field": "IFWI", 'width': 140}]},
+            {'headerName': "DPMO Status",
+             "marryChildren": True,
+             "children": [
+                 {'headerName': 'Cycling Type', 'field': 'Cycling Type', 'type': [], 'width': 140},
+                 {'headerName': 'Cycling Start Date', 'field': 'Cycling Start Date', 'type': [],
+                  "columnGroupShow": "open", "filter": 'agDateColumnFilter'},
+                 {'headerName': 'Cycling Stop Date', 'field': 'Cycling Stop Date',
+                  'type': [], "columnGroupShow": "open", "filter": 'agDateColumnFilter'},
+                 {'headerName': 'Target Cycles', 'field': 'Target Cycles',
+                  'type': ['numericColumn', 'numberColumnFilter'], "columnGroupShow": "open"},
+                 {'headerName': 'Work Week', 'field': 'Work Week', 'type': [], 'width': 150},
+                 {'headerName': 'Attempt', 'field': 'Attempt', 'type': [], 'width': 120},
+                 {'headerName': 'Cycles Run', 'field': 'Cycles Run',
+                  'type': ['numericColumn', 'numberColumnFilter'], 'width': 150},
+                 {'headerName': 'Nof Failures', 'field': 'Nof Failures',
+                  'type': ['numericColumn', 'numberColumnFilter'], "columnGroupShow": "open"},
+                 {'headerName': 'Failure Description', 'field': 'Failure Description',
+                  'editable': True, "columnGroupShow": "open", "width": 600},
+                 {'headerName': 'PostCode', 'field': 'PostCode', 'type': [], "columnGroupShow": "open"},
+                 {'headerName': 'Current State', 'field': 'Current State', 'type': [], 'width': 150},
+             ]
+             },
+            {'headerName': 'Log Path', 'field': 'Log Path', 'type': [], 'width': 540},
+            {'headerName': 'PCIe Info', 'field': 'PCIe Info', 'type': []},
+            {'headerName': 'Comment', 'field': 'Comment', 'type': [], 'editable': True}
+        ]}
     with tab1:
         grid_return = AgGrid(sp_df, gridOptions=grid_options, theme="alpine", key="cs_sp")
         sp_cs_frame = grid_return['data']
@@ -103,7 +143,7 @@ def main():
         show_df(ap_cs_frame, "AP")
 
     with tab3:
-        grid_return = AgGrid(fsp_df, gridOptions=grid_options, theme="alpine", key="cs_fsp")
+        grid_return = AgGrid(fsp_df, gridOptions=grid_options_fsp_api, theme="alpine", key="cs_fsp")
         fsp_cs_frame = grid_return['data']
         show_df(fsp_cs_frame, "fsp")
 
