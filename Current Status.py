@@ -7,6 +7,7 @@ from DButil import *
 from streamlit_autorefresh import st_autorefresh
 import datetime
 import pytz
+import plotly.express as px
 
 @st.cache_data
 def convert_df(data):
@@ -132,17 +133,50 @@ def main():
             {'headerName': 'PCIe Info', 'field': 'PCIe Info', 'type': []},
             {'headerName': 'Comment', 'field': 'Comment', 'type': [], 'editable': True}
         ]}
+
+    color_map = {'Running': 'yellow', 'Stop': 'orange', 'Aborted': 'red', 'Finished': 'green'}
+
     with tab1:
+        left, right = st.columns(2)
+        with left:
+            fig = px.histogram(sp_df, x='Current State', color='Current State', color_discrete_map=color_map)
+            fig.update_yaxes(title_text='System(s) Count')
+            st.plotly_chart(fig)
+        with right:
+            total_cycles = sp_df.groupby('Cycling Type')['Cycles Run'].sum().reset_index()
+            fig2 = px.bar(total_cycles, x='Cycling Type', y='Cycles Run', color_discrete_sequence=['green'])
+            st.plotly_chart(fig2)
+
         grid_return = AgGrid(sp_df, gridOptions=grid_options, theme="alpine", key="cs_sp")
         sp_cs_frame = grid_return['data']
         show_df(sp_cs_frame, "SP")
 
     with tab2:
+        left, right = st.columns(2)
+        with left:
+            fig = px.histogram(ap_df, x='Current State', color='Current State', color_discrete_map=color_map)
+            fig.update_yaxes(title_text='System(s) Count')
+            st.plotly_chart(fig)
+        with right:
+            total_cycles = ap_df.groupby('Cycling Type')['Cycles Run'].sum().reset_index()
+            fig2 = px.bar(total_cycles, x='Cycling Type', y='Cycles Run', color_discrete_sequence=['green'])
+            st.plotly_chart(fig2)
+
         grid_return = AgGrid(ap_df, gridOptions=grid_options, theme="alpine", key="cs_ap")
         ap_cs_frame = grid_return['data']
         show_df(ap_cs_frame, "AP")
 
     with tab3:
+        left, right = st.columns(2)
+        with left:
+            fig = px.histogram(fsp_df, x='Current State', color='Current State', color_discrete_map=color_map)
+            fig.update_yaxes(title_text='System(s) Count')
+            st.plotly_chart(fig)
+        with right:
+            total_cycles = fsp_df.groupby('Cycling Type')['Cycles Run'].sum().reset_index()
+            fig2 = px.bar(total_cycles, x='Cycling Type', y='Cycles Run',  color_discrete_sequence=['green'])
+            st.plotly_chart(fig2)
+
         grid_return = AgGrid(fsp_df, gridOptions=grid_options_fsp_api, theme="alpine", key="cs_fsp")
         fsp_cs_frame = grid_return['data']
         show_df(fsp_cs_frame, "fsp")

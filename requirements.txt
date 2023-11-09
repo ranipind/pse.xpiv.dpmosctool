@@ -6,3 +6,4 @@ streamlit-aggrid
 streamlit-extras
 streamlit_autorefresh
 pytz
+plotly
