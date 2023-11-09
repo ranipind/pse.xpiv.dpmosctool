@@ -137,12 +137,12 @@ def main():
     color_map = {'Running': 'yellow', 'Stop': 'orange', 'Aborted': 'red', 'Finished': 'green'}
 
     with tab1:
-        left, right = st.columns(2)
-        with left:
-            fig = px.histogram(sp_df, x='Current State', color='Current State', color_discrete_map=color_map)
-            fig.update_yaxes(title_text='System(s) Count')
-            st.plotly_chart(fig)
-        with right:
+        _, center, _ = st.columns(3)
+        # with left:
+        #     fig = px.histogram(sp_df, x='Current State', color='Current State', color_discrete_map=color_map)
+        #     fig.update_yaxes(title_text='System(s) Count')
+        #     st.plotly_chart(fig)
+        with center:
             total_cycles = sp_df.groupby('Cycling Type')['Cycles Run'].sum().reset_index()
             fig2 = px.bar(total_cycles, x='Cycling Type', y='Cycles Run', color_discrete_sequence=['green'])
             st.plotly_chart(fig2)
@@ -152,12 +152,13 @@ def main():
         show_df(sp_cs_frame, "SP")
 
     with tab2:
-        left, right = st.columns(2)
-        with left:
-            fig = px.histogram(ap_df, x='Current State', color='Current State', color_discrete_map=color_map)
-            fig.update_yaxes(title_text='System(s) Count')
-            st.plotly_chart(fig)
-        with right:
+        _, center, _ = st.columns(3)
+        # left, right = st.columns(2)
+        # with left:
+        #     fig = px.histogram(ap_df, x='Current State', color='Current State', color_discrete_map=color_map)
+        #     fig.update_yaxes(title_text='System(s) Count')
+        #     st.plotly_chart(fig)
+        with center:
             total_cycles = ap_df.groupby('Cycling Type')['Cycles Run'].sum().reset_index()
             fig2 = px.bar(total_cycles, x='Cycling Type', y='Cycles Run', color_discrete_sequence=['green'])
             st.plotly_chart(fig2)
@@ -167,12 +168,13 @@ def main():
         show_df(ap_cs_frame, "AP")
 
     with tab3:
-        left, right = st.columns(2)
-        with left:
-            fig = px.histogram(fsp_df, x='Current State', color='Current State', color_discrete_map=color_map)
-            fig.update_yaxes(title_text='System(s) Count')
-            st.plotly_chart(fig)
-        with right:
+        _, center, _ = st.columns(3)
+        # left, right = st.columns(2)
+        # with left:
+        #     fig = px.histogram(fsp_df, x='Current State', color='Current State', color_discrete_map=color_map)
+        #     fig.update_yaxes(title_text='System(s) Count')
+        #     st.plotly_chart(fig)
+        with center:
             total_cycles = fsp_df.groupby('Cycling Type')['Cycles Run'].sum().reset_index()
             fig2 = px.bar(total_cycles, x='Cycling Type', y='Cycles Run',  color_discrete_sequence=['green'])
             st.plotly_chart(fig2)
