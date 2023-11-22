@@ -94,46 +94,6 @@ def main():
             {'headerName': 'Comment', 'field': 'Comment', 'type': [], 'editable': True}
         ]}
 
-    grid_options_fsp_api = {
-        'defaultColDef': {'minWidth': 5, 'editable': False, 'filter': True, 'resizable': True, 'sortable': True},
-        'columnDefs': [
-            {'headerName': 'ID', 'valueGetter': 'node.id', "width": 70},
-            {'headerName': 'System', 'field': 'System'},
-            {'headerName': "HW Status",
-             "marryChildren": True,
-             'children': [
-                 {"field": "QDF", "columnGroupShow": "open"},
-                 {"field": "Sockets", "columnGroupShow": "open"},
-                 {"field": "OS", "columnGroupShow": "open"},
-                 {"field": "HW CFG Description", "columnGroupShow": "open"},
-                 {"field": "IFWI", 'width': 140}]},
-            {'headerName': "DPMO Status",
-             "marryChildren": True,
-             "children": [
-                 {'headerName': 'Cycling Type', 'field': 'Cycling Type', 'type': [], 'width': 140},
-                 {'headerName': 'Cycling Start Date', 'field': 'Cycling Start Date', 'type': [],
-                  "columnGroupShow": "open", "filter": 'agDateColumnFilter'},
-                 {'headerName': 'Cycling Stop Date', 'field': 'Cycling Stop Date',
-                  'type': [], "columnGroupShow": "open", "filter": 'agDateColumnFilter'},
-                 {'headerName': 'Target Cycles', 'field': 'Target Cycles',
-                  'type': ['numericColumn', 'numberColumnFilter'], "columnGroupShow": "open"},
-                 {'headerName': 'Work Week', 'field': 'Work Week', 'type': [], 'width': 150},
-                 {'headerName': 'Attempt', 'field': 'Attempt', 'type': [], 'width': 120},
-                 {'headerName': 'Cycles Run', 'field': 'Cycles Run',
-                  'type': ['numericColumn', 'numberColumnFilter'], 'width': 150},
-                 {'headerName': 'Nof Failures', 'field': 'Nof Failures',
-                  'type': ['numericColumn', 'numberColumnFilter'], "columnGroupShow": "open"},
-                 {'headerName': 'Failure Description', 'field': 'Failure Description',
-                  'editable': True, "columnGroupShow": "open", "width": 600},
-                 {'headerName': 'PostCode', 'field': 'PostCode', 'type': [], "columnGroupShow": "open"},
-                 {'headerName': 'Current State', 'field': 'Current State', 'type': [], 'width': 150},
-             ]
-             },
-            {'headerName': 'Log Path', 'field': 'Log Path', 'type': [], 'width': 540},
-            {'headerName': 'PCIe Info', 'field': 'PCIe Info', 'type': []},
-            {'headerName': 'Comment', 'field': 'Comment', 'type': [], 'editable': True}
-        ]}
-
     color_map = {'Running': 'yellow', 'Stop': 'orange', 'Aborted': 'red', 'Finished': 'green'}
 
     with tab1:
@@ -179,7 +139,7 @@ def main():
             fig2 = px.bar(total_cycles, x='Cycling Type', y='Cycles Run',  color_discrete_sequence=['green'])
             st.plotly_chart(fig2)
 
-        grid_return = AgGrid(fsp_df, gridOptions=grid_options_fsp_api, theme="alpine", key="cs_fsp")
+        grid_return = AgGrid(fsp_df, gridOptions=grid_options, theme="alpine", key="cs_fsp")
         fsp_cs_frame = grid_return['data']
         show_df(fsp_cs_frame, "fsp")
 
