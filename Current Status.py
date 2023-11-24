@@ -18,7 +18,7 @@ def convert_df(data):
 def get_df():
     return (get_dataframe(cs_tables["AP"]),
             get_dataframe(cs_tables["SP"]),
-            get_dataframe(cs_tables["EMR_FSP_API"], os.environ["dpmo_fsp_bkc_no"]))
+            get_dataframe(cs_tables["EMR_FSP_API"]))
 
 
 def show_df(cs_frame, key):
